@@ -1,0 +1,53 @@
+# Graphiti MCP Config — eyebrain project
+# LLM: OpenRouter (Claude via OPENROUTER_API_KEY)
+# Embeddings: OpenRouter (text-embedding-3-small) — Ollama crashes on this machine
+# DB: FalkorDB (Docker, localhost:6379)
+
+server:
+  transport: "stdio"
+
+llm:
+  provider: "openai"
+  model: "anthropic/claude-sonnet-4-6"
+  max_tokens: 4096
+
+  providers:
+    openai:
+      api_key: "${OPENROUTER_API_KEY}"
+      api_url: "https://openrouter.ai/api/v1"
+
+embedder:
+  provider: "openai"
+  model: "openai/text-embedding-3-small"
+  dimensions: 1536
+
+  providers:
+    openai:
+      api_key: "${OPENROUTER_API_KEY}"
+      api_url: "https://openrouter.ai/api/v1"
+
+database:
+  provider: "falkordb"
+
+  providers:
+    falkordb:
+      uri: "redis://localhost:6379"
+      password: ""
+      database: "eyebrain"
+
+graphiti:
+  group_id: "eyebrain"
+  user_id: "vincent"
+  entity_types:
+    - name: "Technique"
+      description: "Visual or audiovisual technique used in a video (particle system, feedback loop, raymarching, etc.)"
+    - name: "Tool"
+      description: "Software or hardware tool used to create a visual (TouchDesigner, Blender, After Effects, etc.)"
+    - name: "AudioDriver"
+      description: "Audio characteristic that drives a visual parameter (kick transient, sub bass, spectral centroid, etc.)"
+    - name: "Video"
+      description: "An analyzed audiovisual video with its metadata"
+    - name: "TDOperator"
+      description: "A TouchDesigner operator (node) type used in a network"
+    - name: "AestheticStyle"
+      description: "Visual aesthetic or style category (glitch, organic, geometric, dark, etc.)"
